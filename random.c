@@ -43,7 +43,7 @@ static struct cb_ops random_cb_ops = {
     nodev,                  /* no strategy               */
     nodev,                  /* no print                  */
     nodev,                  /* no dump                   */
-    random_read,            /* no read                   */
+    random_read,            /* read entry point          */
     nodev,                  /* no write                  */
     nodev,                  /* no ioctl                  */
     nodev,                  /* no devmap                 */
