@@ -1,0 +1,54 @@
+RC4-based random number pseudo device for Solaris 2.6 (and probably builds on
+other versions that don't have /dev/random or /dev/urandom).
+
+By Matthew R. Wilson <mwilson@mattwilson.org>
+March 20, 2016.
+
+RC4 implementation as described by Wikipedia
+<https://en.wikipedia.org/wiki/RC4>
+
+If I were you, I wouldn't trust this for two reasons:
+
+ 1) This is currently insecure, as it uses a hard-coded key for the RC4
+    initialization. That is, each time the driver is initialized, the stream
+    of random bytes will be identical to the last time.
+
+ 2) I just threw this together in an afternoon, having no previous experience
+    writing Solaris device drivers. It seems to work, but I've only tested it
+    for a few minutes.
+
+But if that doesn't scare you away, ...
+
+INSTALLING
+==========
+
+You'll need a C compiler on your Solaris system. By default I assume gcc is
+on the path; you can change this on the first line (CC=gcc) of the makefile.
+
+Once that's in place, just run 'make' in the source directory to build the
+driver.
+
+Then, as root, run 'make install'. This will copy the driver to the correct
+location and tell the kernel about it with add_drv(1M), as well as create
+symlinks at /dev/random and /dev/urandom.
+
+USAGE
+=====
+
+Read data from the newly-created character devices at /dev/random and
+/dev/urandom. They are functionally equivalent and use the same internal
+state.
+
+For example:
+
+  $ dd if=/dev/random of=/tmp/test bs=32 count=10
+
+will give you 320 bytes of random data in /tmp/test.
+
+UNINSTALLING
+============
+
+If you want to get rid of the blasted thing, just run 'make uninstall' as
+root. This re-registers the driver with rem_drv(1M), and deletes all of
+the files and /dev links.
+
