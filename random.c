@@ -170,7 +170,7 @@ static int random_detach(dev_info_t *dip, ddi_detach_cmd_t cmd)
 }
 
 /* Character device read method. We will generate one byte of randomness
- * at a time and copy if to the user area. */
+ * at a time and copy it to the user area. */
 static int random_read(dev_t dev, struct uio *uio_p, cred_t *cred_p)
 {
     int result;
