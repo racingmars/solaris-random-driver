@@ -49,6 +49,6 @@ UNINSTALLING
 ============
 
 If you want to get rid of the blasted thing, just run 'make uninstall' as
-root. This re-registers the driver with rem_drv(1M), and deletes all of
+root. This de-registers the driver with rem_drv(1M), and deletes all of
 the files and /dev links.
 
